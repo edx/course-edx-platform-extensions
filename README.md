@@ -1,1 +1,0 @@
-# course-edx-platform-extensions
