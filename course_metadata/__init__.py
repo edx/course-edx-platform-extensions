@@ -1,4 +1,4 @@
 """
 Setup the signals on startup.
 """
-import course_metadata.signals  # pylint: disable=unused-import
+default_app_config = 'course_metadata.apps.SolutionsAppCourseMetadataConfig'
