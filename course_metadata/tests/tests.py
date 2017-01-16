@@ -6,9 +6,8 @@ from mock_django import mock_signal_receiver
 from xmodule.modulestore.django import SignalHandler
 from xmodule.modulestore.tests.django_utils import ModuleStoreTestCase
 from xmodule.modulestore.tests.factories import CourseFactory, ItemFactory
-from openedx.core.djangoapps.util.testing import SignalDisconnectTestMixin
 
-from course_metadata.signals import listen_for_course_publish
+from course_metadata.signals import course_publish_handler_in_course_metadata
 from course_metadata.models import CourseAggregatedMetaData
 
 
@@ -16,7 +15,6 @@ class CoursesMetaDataTests(ModuleStoreTestCase):
     """ Test suite for Course Meta Data """
 
     def setUp(self):
-        SignalHandler.course_published.connect(listen_for_course_publish)
         super(CoursesMetaDataTests, self).setUp()
 
         self.course = CourseFactory.create()
@@ -46,14 +44,13 @@ class CoursesMetaDataTests(ModuleStoreTestCase):
             display_name="Html component"
         )
 
-        self.addCleanup(SignalDisconnectTestMixin.disconnect_course_published_signals)
-
     def test_course_aggregate_metadata_update_on_course_published(self):
         """
         Test course aggregate metadata update receiver is called on course_published signal
         and CourseAggregatedMetaData is updated
         """
-        with mock_signal_receiver(SignalHandler.course_published, wraps=listen_for_course_publish) as receiver:
+        with mock_signal_receiver(SignalHandler.course_published,
+                                  wraps=course_publish_handler_in_course_metadata) as receiver:
             self.assertEqual(receiver.call_count, 0)
 
             # adding new video unit to course should fire the signal

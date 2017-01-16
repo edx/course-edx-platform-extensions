@@ -9,7 +9,7 @@ from .tasks import update_course_aggregate_metadata
 
 
 @receiver(SignalHandler.course_published, dispatch_uid='course_metadata')
-def listen_for_course_publish(sender, course_key, **kwargs):  # pylint: disable=unused-argument
+def course_publish_handler_in_course_metadata(sender, course_key, **kwargs):  # pylint: disable=unused-argument
     """
     Receives signal and kicks off celery task to update course aggregate metadata
     """
