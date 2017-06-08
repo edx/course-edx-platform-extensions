@@ -4,7 +4,7 @@ Models for course_metadata app
 from django.db import models
 
 from model_utils.models import TimeStampedModel
-from xmodule_django.models import CourseKeyField
+from openedx.core.djangoapps.xmodule_django.models import CourseKeyField
 
 from .utils import get_course_leaf_nodes
 
