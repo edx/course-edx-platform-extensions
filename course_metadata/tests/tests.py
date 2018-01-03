@@ -19,6 +19,7 @@ class CoursesMetaDataTests(ModuleStoreTestCase):
     """ Test suite for Course Meta Data """
 
     MODULESTORE = TEST_DATA_SPLIT_MODULESTORE
+    ENABLED_SIGNALS = ['course_published']
 
     def setUp(self):
         super(CoursesMetaDataTests, self).setUp()
