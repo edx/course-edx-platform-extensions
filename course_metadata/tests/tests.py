@@ -1,6 +1,8 @@
 """
 Tests for course_metadata app
 """
+from django.core.urlresolvers import reverse
+from edx_solutions_api_integration.test_utils import APIClientMixin
 from mock_django import mock_signal_receiver
 
 from xmodule.modulestore.django import SignalHandler
@@ -77,3 +79,48 @@ class CoursesMetaDataTests(ModuleStoreTestCase):
         """
         course_metadata = CourseAggregatedMetaData.get_from_id(self.course.id)
         self.assertEqual(course_metadata.total_assessments, 1)
+
+
+class CourseSettingTests(ModuleStoreTestCase, APIClientMixin):
+    """ Test suite for Course Setting """
+
+    MODULESTORE = TEST_DATA_SPLIT_MODULESTORE
+
+    def setUp(self):
+        super(CourseSettingTests, self).setUp()
+
+        self.course = CourseFactory.create()
+        self.course_settings_uri = reverse('additional-course-settings', kwargs={'course_id': unicode(self.course.id)})
+        self.languages = ["it", "de-at", "es", "pt-br"]
+
+    def test_course_settings_languages(self):
+        """
+        Test for setting/getting course languages from course settings
+        """
+        data = {"languages": self.languages}
+        response = self.do_put(self.course_settings_uri, data)
+        self.assertEqual(response.status_code, 200)
+
+        response = self.do_get(self.course_settings_uri)
+        self.assertEqual(response.status_code, 200)
+        for language in response.data['languages']:
+            self.assertIn(language, self.languages)
+
+    def test_course_settings_update_languages(self):
+        """
+        Test for updating course languages in course settings
+        """
+        data = {"languages": self.languages}
+        response = self.do_put(self.course_settings_uri, data)
+
+        self.assertEqual(response.status_code, 200)
+        for language in response.data['languages']:
+            self.assertIn(language, self.languages)
+
+        updated_languages = ["it", "de-at", "es"]
+        data = {"languages": updated_languages}
+        response = self.do_put(self.course_settings_uri, data)
+
+        self.assertEqual(response.status_code, 200)
+        for language in response.data['languages']:
+            self.assertIn(language, self.languages)
