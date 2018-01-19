@@ -4,7 +4,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='course-edx-platform-extensions',
-    version='1.0.5',
+    version='1.0.6',
     description='Course metadata management extension for edX platform',
     long_description=open('README.rst').read(),
     author='edX',
