@@ -93,6 +93,14 @@ class CourseSettingTests(ModuleStoreTestCase, APIClientMixin):
         self.course_settings_uri = reverse('additional-course-settings', kwargs={'course_id': unicode(self.course.id)})
         self.languages = ["it", "de-at", "es", "pt-br"]
 
+    def test_course_settings_get_with_no_initial_language(self):
+        """
+        Test for getting settings with no initial language
+        """
+        response = self.do_get(self.course_settings_uri)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.data['languages'], [])
+
     def test_course_settings_languages(self):
         """
         Test for setting/getting course languages from course settings

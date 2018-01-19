@@ -10,8 +10,12 @@ class StringListField(serializers.ListField):
 
     def to_representation(self, data):
         """
-        List of object instances -> List of dicts of primitive datatypes.
+        Parse a string into a python list. Converts empty string to empty list.
+        If data is already a list then no operation is performed on that data.
         """
+        if not data:
+            return []
+
         if isinstance(data, basestring):
             data = ast.literal_eval(data)
         return data
