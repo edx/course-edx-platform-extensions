@@ -57,5 +57,6 @@ class CourseSetting(TimeStampedModel):
 
     @property
     def languages_list(self):
-        data = ast.literal_eval(self.languages)
-        return data
+        if not self.languages:
+            return []
+        return ast.literal_eval(self.languages)
