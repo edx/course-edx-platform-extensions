@@ -91,44 +91,10 @@ class CourseSettingTests(ModuleStoreTestCase, APIClientMixin):
 
         self.course = CourseFactory.create()
         self.course_settings_uri = reverse('additional-course-settings', kwargs={'course_id': unicode(self.course.id)})
-        self.languages = ["it", "de-at", "es", "pt-br"]
 
-    def test_course_settings_get_with_no_initial_language(self):
+    def test_course_settings_get(self):
         """
-        Test for getting settings with no initial language
+        Test for getting settings
         """
         response = self.do_get(self.course_settings_uri)
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.data['languages'], [])
-
-    def test_course_settings_languages(self):
-        """
-        Test for setting/getting course languages from course settings
-        """
-        data = {"languages": self.languages}
-        response = self.do_put(self.course_settings_uri, data)
-        self.assertEqual(response.status_code, 200)
-
-        response = self.do_get(self.course_settings_uri)
-        self.assertEqual(response.status_code, 200)
-        for language in response.data['languages']:
-            self.assertIn(language, self.languages)
-
-    def test_course_settings_update_languages(self):
-        """
-        Test for updating course languages in course settings
-        """
-        data = {"languages": self.languages}
-        response = self.do_put(self.course_settings_uri, data)
-
-        self.assertEqual(response.status_code, 200)
-        for language in response.data['languages']:
-            self.assertIn(language, self.languages)
-
-        updated_languages = ["it", "de-at", "es"]
-        data = {"languages": updated_languages}
-        response = self.do_put(self.course_settings_uri, data)
-
-        self.assertEqual(response.status_code, 200)
-        for language in response.data['languages']:
-            self.assertIn(language, self.languages)
