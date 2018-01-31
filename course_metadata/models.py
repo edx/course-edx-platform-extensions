@@ -1,7 +1,6 @@
 """
 Models for course_metadata app
 """
-import ast
 from django.db import models
 
 from model_utils.models import TimeStampedModel
@@ -50,13 +49,3 @@ class CourseSetting(TimeStampedModel):
     This model have custom course settings.
     """
     id = CourseKeyField(primary_key=True, max_length=255)
-    languages = models.TextField(
-        blank=True,
-        help_text="A comma-separated list of language codes to release to the public."
-    )
-
-    @property
-    def languages_list(self):
-        if not self.languages:
-            return []
-        return ast.literal_eval(self.languages)

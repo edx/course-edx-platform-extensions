@@ -19,7 +19,6 @@ class CourseSettingView(SecureRetrieveUpdateAPIView):
         **POST**
 
         -id: course id
-        -langauges: A comma-separated list of language codes. Example: ['it', 'de-at', 'es', 'pt-br']
 
     **Response Values**
 
