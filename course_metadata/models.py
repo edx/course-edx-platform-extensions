@@ -16,7 +16,7 @@ class CourseAggregatedMetaData(TimeStampedModel):
     This model contains aggregated metadata about a course such as
     total modules, total assessments.
     """
-    id = CourseKeyField(db_index=True, primary_key=True, max_length=255)  # pylint: disable=invalid-name
+    id = CourseKeyField(primary_key=True, max_length=255)  # pylint: disable=invalid-name
     total_modules = models.IntegerField(default=0)
     total_assessments = models.IntegerField(default=0)
 
@@ -42,3 +42,10 @@ class CourseAggregatedMetaData(TimeStampedModel):
             course_metadata.total_assessments = len(get_course_leaf_nodes(course_id))
             course_metadata.save()
         return course_metadata
+
+
+class CourseSetting(TimeStampedModel):
+    """
+    This model have custom course settings.
+    """
+    id = CourseKeyField(primary_key=True, max_length=255)

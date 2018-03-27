@@ -1,6 +1,8 @@
 """
 Tests for course_metadata app
 """
+from django.core.urlresolvers import reverse
+from edx_solutions_api_integration.test_utils import APIClientMixin
 from mock_django import mock_signal_receiver
 
 from xmodule.modulestore.django import SignalHandler
@@ -78,3 +80,22 @@ class CoursesMetaDataTests(ModuleStoreTestCase):
         """
         course_metadata = CourseAggregatedMetaData.get_from_id(self.course.id)
         self.assertEqual(course_metadata.total_assessments, 1)
+
+
+class CourseSettingTests(ModuleStoreTestCase, APIClientMixin):
+    """ Test suite for Course Setting """
+
+    MODULESTORE = TEST_DATA_SPLIT_MODULESTORE
+
+    def setUp(self):
+        super(CourseSettingTests, self).setUp()
+
+        self.course = CourseFactory.create()
+        self.course_settings_uri = reverse('additional-course-settings', kwargs={'course_id': unicode(self.course.id)})
+
+    def test_course_settings_get(self):
+        """
+        Test for getting settings
+        """
+        response = self.do_get(self.course_settings_uri)
+        self.assertEqual(response.status_code, 200)
