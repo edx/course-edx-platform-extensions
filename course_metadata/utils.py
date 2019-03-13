@@ -17,8 +17,6 @@ def remove_orphans(course_key, detached_categories):
     )
 
 
-
-
 def get_course_leaf_nodes(course_key):
     """
     Get count of the leaf nodes with ability to exclude some categories

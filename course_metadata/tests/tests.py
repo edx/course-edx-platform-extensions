@@ -8,7 +8,6 @@ from mock_django import mock_signal_receiver
 from xmodule.modulestore.django import SignalHandler
 from xmodule.modulestore.tests.factories import CourseFactory, ItemFactory
 
-from course_metadata.signals import course_publish_handler_in_course_metadata
 from course_metadata.models import CourseAggregatedMetaData
 
 from xmodule.modulestore.tests.django_utils import (
