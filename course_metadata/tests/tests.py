@@ -8,7 +8,6 @@ from mock_django import mock_signal_receiver
 from xmodule.modulestore.django import SignalHandler
 from xmodule.modulestore.tests.factories import CourseFactory, ItemFactory
 
-from course_metadata.signals import course_publish_handler_in_course_metadata
 from course_metadata.models import CourseAggregatedMetaData
 
 from xmodule.modulestore.tests.django_utils import (
@@ -51,27 +50,6 @@ class CoursesMetaDataTests(ModuleStoreTestCase):
             data=self.test_data,
             display_name="Html component"
         )
-
-    def test_course_aggregate_metadata_update_on_course_published(self):
-        """
-        Test course aggregate metadata update receiver is called on course_published signal
-        and CourseAggregatedMetaData is updated
-        """
-        with mock_signal_receiver(SignalHandler.course_published,
-                                  wraps=course_publish_handler_in_course_metadata) as receiver:
-            self.assertEqual(receiver.call_count, 0)
-
-            # adding new video unit to course should fire the signal
-            ItemFactory.create(
-                category="video",
-                parent_location=self.unit.location,
-                data=self.test_data,
-                display_name="Video to test aggregates"
-            )
-
-            self.assertEqual(receiver.call_count, 1)
-            total_assessments = CourseAggregatedMetaData.objects.get(id=self.course.id).total_assessments
-            self.assertEqual(total_assessments, 2)
 
     def test_get_course_aggregate_metadata_by_course_key(self):
         """
