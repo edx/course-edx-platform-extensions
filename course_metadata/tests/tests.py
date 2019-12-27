@@ -3,7 +3,6 @@ Tests for course_metadata app
 """
 from django.core.urlresolvers import reverse
 from edx_solutions_api_integration.test_utils import APIClientMixin
-from mock_django import mock_signal_receiver
 
 from xmodule.modulestore.django import SignalHandler
 from xmodule.modulestore.tests.factories import CourseFactory, ItemFactory
