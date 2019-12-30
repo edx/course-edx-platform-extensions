@@ -8,3 +8,4 @@ class CourseSettingSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = CourseSetting
+        fields = '__all__'
