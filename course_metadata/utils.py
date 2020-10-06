@@ -4,8 +4,8 @@ Utility methods for course metadata app
 from django.conf import settings
 from django.db.models import Q
 
-from xmodule.modulestore.django import modulestore
 from student.models import CourseEnrollment
+from xmodule.modulestore.django import modulestore
 
 
 def remove_orphans(course_key, detached_categories):
