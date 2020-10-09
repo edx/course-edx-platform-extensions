@@ -1,10 +1,8 @@
-# -*- coding: utf-8 -*-
-from __future__ import unicode_literals
-
-from django.db import migrations, models
 import django.utils.timezone
-from opaque_keys.edx.django.models import CourseKeyField
+from django.db import migrations, models
+
 import model_utils.fields
+from opaque_keys.edx.django.models import CourseKeyField
 
 
 class Migration(migrations.Migration):

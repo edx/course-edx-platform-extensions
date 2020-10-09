@@ -1,7 +1,7 @@
-from opaque_keys.edx.keys import CourseKey
-from edx_solutions_api_integration.permissions import SecureRetrieveUpdateAPIView
 from course_metadata.models import CourseSetting
 from course_metadata.serializers import CourseSettingSerializer
+from edx_solutions_api_integration.permissions import SecureRetrieveUpdateAPIView
+from opaque_keys.edx.keys import CourseKey
 
 
 class CourseSettingView(SecureRetrieveUpdateAPIView):
