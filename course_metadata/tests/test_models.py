@@ -1,7 +1,7 @@
 """
 Tests for course_metadata app
 """
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 
 from course_metadata.models import CourseAggregatedMetaData
 from edx_solutions_api_integration.test_utils import APIClientMixin
