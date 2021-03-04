@@ -1,6 +1,9 @@
 course-edx-platform-extensions
 ==============================
 
+Notice: This repo will be archived in April 2021.
+#######
+
 course-edx-platform-extensions (``course_metadata``) is a Django application responsible for storing and caching aggregated metadata for a course.
 
 
