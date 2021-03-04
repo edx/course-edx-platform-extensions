@@ -3,17 +3,15 @@ This module has tests for utils.py
 """
 # pylint: disable=no-member
 
-import ddt
-
 from django.test.utils import override_settings
 
+import ddt
+from course_metadata.utils import get_course_leaf_nodes
 from student.tests.factories import UserFactory
 from xmodule.modulestore import ModuleStoreEnum
 from xmodule.modulestore.django import modulestore
 from xmodule.modulestore.tests.django_utils import ModuleStoreTestCase
 from xmodule.modulestore.tests.factories import CourseFactory, ItemFactory
-
-from course_metadata.utils import get_course_leaf_nodes
 
 
 @ddt.ddt
@@ -21,7 +19,7 @@ class UtilsTests(ModuleStoreTestCase):
     """ Test suite to test operation in utils"""
 
     def setUp(self):
-        super(UtilsTests, self).setUp()
+        super().setUp()
 
         self.course = CourseFactory.create()
         self.test_data = '<html>Test data</html>'
@@ -35,30 +33,30 @@ class UtilsTests(ModuleStoreTestCase):
         self.sub_section = ItemFactory.create(
             parent_location=self.chapter.location,
             category="sequential",
-            display_name=u"test subsection",
+            display_name="test subsection",
         )
         self.sub_section2 = ItemFactory.create(
             parent_location=self.chapter.location,
             category="sequential",
-            display_name=u"test subsection 2",
+            display_name="test subsection 2",
         )
         self.vertical = ItemFactory.create(
             parent_location=self.sub_section.location,
             category="vertical",
             metadata={'graded': True, 'format': 'Homework'},
-            display_name=u"test vertical",
+            display_name="test vertical",
         )
         self.vertical2 = ItemFactory.create(
             parent_location=self.sub_section2.location,
             category="vertical",
             metadata={'graded': True, 'format': 'FinalExam'},
-            display_name=u"test vertical 2",
+            display_name="test vertical 2",
         )
         self.vertical3 = ItemFactory.create(
             parent_location=self.sub_section2.location,
             category="vertical",
             metadata={'graded': True, 'format': 'Lab'},
-            display_name=u"Course Discussion",
+            display_name="Course Discussion",
         )
         self.content_child1 = ItemFactory.create(
             category="html",

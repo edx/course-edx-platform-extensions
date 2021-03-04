@@ -1,15 +1,13 @@
 """
 Tests for course_metadata app
 """
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 
 from course_metadata.models import CourseAggregatedMetaData
 from edx_solutions_api_integration.test_utils import APIClientMixin
-from xmodule.modulestore.tests.factories import CourseFactory, ItemFactory
 from xmodule.modulestore.tests.django_utils import (
-    ModuleStoreTestCase,
-    TEST_DATA_SPLIT_MODULESTORE
-)
+    TEST_DATA_SPLIT_MODULESTORE, ModuleStoreTestCase)
+from xmodule.modulestore.tests.factories import CourseFactory, ItemFactory
 
 
 class CoursesMetaDataTests(ModuleStoreTestCase):
@@ -19,7 +17,7 @@ class CoursesMetaDataTests(ModuleStoreTestCase):
     ENABLED_SIGNALS = ['course_published']
 
     def setUp(self):
-        super(CoursesMetaDataTests, self).setUp()
+        super().setUp()
 
         self.course = CourseFactory.create()
         self.test_data = '<html>Test data</html>'
@@ -32,13 +30,13 @@ class CoursesMetaDataTests(ModuleStoreTestCase):
         self.sub_section = ItemFactory.create(
             parent_location=self.chapter.location,
             category="sequential",
-            display_name=u"test subsection",
+            display_name="test subsection",
         )
         self.unit = ItemFactory.create(
             parent_location=self.sub_section.location,
             category="vertical",
             metadata={'graded': True, 'format': 'Homework'},
-            display_name=u"test unit",
+            display_name="test unit",
         )
         self.content_child1 = ItemFactory.create(
             category="html",
@@ -62,10 +60,10 @@ class CourseSettingTests(ModuleStoreTestCase, APIClientMixin):
     MODULESTORE = TEST_DATA_SPLIT_MODULESTORE
 
     def setUp(self):
-        super(CourseSettingTests, self).setUp()
+        super().setUp()
 
         self.course = CourseFactory.create()
-        self.course_settings_uri = reverse('additional-course-settings', kwargs={'course_id': unicode(self.course.id)})
+        self.course_settings_uri = reverse('additional-course-settings', kwargs={'course_id': str(self.course.id)})
 
     def test_course_settings_get(self):
         """
